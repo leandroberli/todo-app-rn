@@ -1,13 +1,15 @@
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
 const Card = (props) => {
     return (
+        <TouchableOpacity activeOpacity={0.6} style={styles.touch}>
         <View style={{...styles.card, ...props.style }}>
             <Text style={styles.title}>{props.title}</Text>
             <Text style={styles.subtitle}>{props.subtitle}</Text>
             <Text numberOfLines={6} style={styles.description}>{props.description}</Text>
         </View>
+        </TouchableOpacity>
     );
 };
 
@@ -19,14 +21,15 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 8,
         width: 175,
-        marginBottom: 0,
+        marginBottom: 5,
         marginLeft: 5,
         alignContent: 'center',
         elevation: 3,
         shadowColor: 'black',
-        shadowOffset: {width: 5, height: 5},
+        shadowOffset: {width: 3, height: 3},
         shadowOpacity: 0.7,
         shadowRadius: 3,
+        flex: 1,
     },
     title: {
         padding: 5,
@@ -45,4 +48,6 @@ const styles = StyleSheet.create({
         margin: 5,
         flex: 1
     },
+    touch: {
+    }
 });

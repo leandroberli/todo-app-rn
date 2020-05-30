@@ -5,19 +5,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faListAlt } from '@fortawesome/free-solid-svg-icons'
 
 const ScrollableRow = (props) => {
-
-    // VER PORQUE NO FUNCIONA ASI
-    const outputCards = () => {
-        cards.map(card =>  <Card title={card.title} subtitle={card.subtitle } description={card.description}/>  );
-    };
-    const cards = props.cards
+    console.log(props);
 
     return (
         <View style={styles.parentRowContainer}>
             <View style={styles.sectionContainer}>
                 <FontAwesomeIcon icon={ faListAlt } size={22} style={styles.iconSection} />
                 <Text style={styles.titleSection}>{props.nameSection}</Text>
-                <Text style={styles.countTitle} > 23 tasks </Text>
+                <Text style={styles.countTitle} > {props.cards.length} tasks </Text>
             </View>
             
             <View style={{...styles.rowContainer, ...props.style}}>
