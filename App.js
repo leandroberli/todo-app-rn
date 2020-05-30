@@ -5,7 +5,7 @@ import ScrollableRow from './components/ScrollableRow';
 export default function App() {
 
   var cards = [
-    {title: "Take the bus", subtitle: "30 Mayo 2020", description: "This a example text for fill the card and simulate a description", state: 1},
+    {title: "Take the bus", subtitle: "30 Mayo 2020", description: "This a example text for fill the card and simulate a description. Here is a extension because i wanna test the max number of lines in my card description. i setted 6.", state: 1},
     {title: "Study physics", subtitle: "12 Abril 2020", description: "This a example text for fill the card and simulate a description", state: 1},
     {title: "Buy a gift", subtitle: "6 Enero 2020", description: "This a example text for fill the card and simulate a description", state: 1},
     {title: "Take the bus", subtitle: "30 Mayo 2020", description: "This a example text for fill the card and simulate a description", state: 1},
