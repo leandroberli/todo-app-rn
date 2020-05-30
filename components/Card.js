@@ -1,9 +1,9 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Vibration } from 'react-native';
 
 const Card = (props) => {
     return (
-        <TouchableOpacity activeOpacity={0.6} style={styles.touch}>
+        <TouchableOpacity activeOpacity={0.6} onPress={() => {props.onDelete(props.title); Vibration.vibrate(100)}}>
         <View style={{...styles.card, ...props.style }}>
             <Text style={styles.title}>{props.title}</Text>
             <Text style={styles.subtitle}>{props.subtitle}</Text>

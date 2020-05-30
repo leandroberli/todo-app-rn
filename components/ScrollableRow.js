@@ -1,23 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import Card from './Card'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faListAlt } from '@fortawesome/free-solid-svg-icons'
+import { faPenSquare, faCheckSquare, faListAlt } from '@fortawesome/free-solid-svg-icons'
 
 const ScrollableRow = (props) => {
-    console.log(props);
+    console.log(props)
+    const [cardsSection, setCardsSection] = useState(props.cardsSection);
+    const [cards, setCards] = useState(props.cards);
+
+    let cardStyle = cardsSection == 1 ? styles.todoCard : cardsSection == 2 ? styles.inprogressCard : styles.doneCard
+    let titleForSection = cardsSection == 1 ? 'To do' : cardsSection == 2 ? 'In progress' : 'Done'
+    let icon = cardsSection == 1 ? faPenSquare : cardsSection == 2 ? faListAlt : faCheckSquare
+    //let count = cards.length
+
+    const handleDeleteCard = (title) => {
+        let arr = cards.filter( entry => {
+            if (entry.title != title) {
+                return entry
+            }
+        });
+        setCards(arr);
+    };
 
     return (
         <View style={styles.parentRowContainer}>
             <View style={styles.sectionContainer}>
-                <FontAwesomeIcon icon={ faListAlt } size={22} style={styles.iconSection} />
-                <Text style={styles.titleSection}>{props.nameSection}</Text>
-                <Text style={styles.countTitle} > {props.cards.length} tasks </Text>
+                <FontAwesomeIcon icon={ icon } size={22} style={styles.iconSection} />
+                <Text style={styles.titleSection}> { titleForSection } </Text>
+                <Text style={styles.countTitle} > { cards.length } tasks </Text>
             </View>
-            
             <View style={{...styles.rowContainer, ...props.style}}>
                 <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                    { props.cards.map(card => <Card style={card.state == 1 ? styles.todoCard : card.state == 2 ? styles.inprogressCard : styles.doneCard } title={card.title} subtitle={card.subtitle } description={card.description} /> )}
+                    { cards.map(card => <Card style={cardStyle} title={card.title} subtitle={card.subtitle } description={card.description} onDelete={handleDeleteCard} /> )}
                 </ScrollView>
             </View>
         </View>
