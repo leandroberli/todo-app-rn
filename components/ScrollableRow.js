@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
-import Card from './Card'
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faPenSquare, faCheckSquare, faListAlt } from '@fortawesome/free-solid-svg-icons'
+import { StyleSheet, Text, View, ScrollView, FlatList } from 'react-native';
+import Card from './Card';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faPenSquare, faCheckSquare, faListAlt } from '@fortawesome/free-solid-svg-icons';
 
 const ScrollableRow = (props) => {
     console.log(props)
@@ -31,9 +31,13 @@ const ScrollableRow = (props) => {
                 <Text style={styles.countTitle} > { cards.length } tasks </Text>
             </View>
             <View style={{...styles.rowContainer, ...props.style}}>
-                <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                    { cards.map(card => <Card style={cardStyle} title={card.title} subtitle={card.subtitle } description={card.description} onDelete={handleDeleteCard} /> )}
-                </ScrollView>
+                <FlatList
+                    showsHorizontalScrollIndicator={false}
+                    horizontal={true}
+                    data={cards}
+                    keyExtractor={(item, index) => item.title}
+                    renderItem= { itemData => <Card style={cardStyle} title={itemData.item.title} subtitle={itemData.item.subtitle } description={itemData.item.description} onDelete={handleDeleteCard} />}
+                />    
             </View>
         </View>
     );
