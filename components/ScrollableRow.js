@@ -15,7 +15,7 @@ const ScrollableRow = (props) => {
     //let count = cards.length
 
     const handleDeleteCard = (title) => {
-        let arr = cards.filter( entry => {
+        let arr = cards.filter(entry => {
             if (entry.title != title) {
                 return entry
             }
@@ -26,18 +26,18 @@ const ScrollableRow = (props) => {
     return (
         <View style={styles.parentRowContainer}>
             <View style={styles.sectionContainer}>
-                <FontAwesomeIcon icon={ icon } size={22} style={styles.iconSection} />
-                <Text style={styles.titleSection}> { titleForSection } </Text>
-                <Text style={styles.countTitle} > { cards.length } tasks </Text>
+                <FontAwesomeIcon icon={icon} size={22} style={styles.iconSection} />
+                <Text style={styles.titleSection}> {titleForSection} </Text>
+                <Text style={styles.countTitle} > {cards.length} tasks </Text>
             </View>
-            <View style={{...styles.rowContainer, ...props.style}}>
+            <View style={{ ...styles.rowContainer, ...props.style }}>
                 <FlatList
                     showsHorizontalScrollIndicator={false}
                     horizontal={true}
                     data={cards}
                     keyExtractor={(item, index) => item.title}
-                    renderItem= { itemData => <Card style={cardStyle} title={itemData.item.title} subtitle={itemData.item.subtitle } description={itemData.item.description} onDelete={handleDeleteCard} />}
-                />    
+                    renderItem={itemData => <Card style={cardStyle} title={itemData.item.title} subtitle={itemData.item.subtitle} description={itemData.item.description} onDelete={handleDeleteCard} />}
+                />
             </View>
         </View>
     );
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     sectionContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        
+
     },
     iconSection: {
         marginTop: 15,
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
         fontSize: 15,
         fontWeight: 'bold',
     },
-    rowContainer : {
+    rowContainer: {
         flex: 1,
         flexDirection: 'row',
         borderBottomColor: 'black',
