@@ -7,7 +7,11 @@ const TopBar = (props) => {
     return (
         <View style={styles.topBar}>
             <Text style={styles.topBarTitle}>React native example</Text>
-            <TouchableOpacity onPress={() => Vibration.vibrate(100)}>
+            <TouchableOpacity onPress={ () => { 
+                props.addTaskAction();
+                console.log(props.addTaskAction);
+                Vibration.vibrate(100); }
+            }>
                 <View style={styles.topBarButtonContainer} >
                     <FontAwesomeIcon icon={faPlus} color={'white'} size={22} />
                 </View>

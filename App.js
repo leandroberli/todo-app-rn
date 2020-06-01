@@ -3,8 +3,12 @@ import { StyleSheet, Text, View, ScrollView } from 'react-native';
 
 import TopBar from './components/TopBar';
 import HomeScreen from './screens/HomeScreen';
+import AddTaskScreen from './screens/AddTaskScreen';
 
 export default function App() {
+
+  const [addTaskScreen, setAddTaskScreen] = useState(false);
+
   var cardsData = [
     { title: "Take the bus", subtitle: "30 Mayo 2020", description: "This a example text for fill the card and simulate a description. Here is a extension because i wanna test the max number of lines in my card description. i setted 6.", state: 1 },
     { title: "Study physics", subtitle: "12 Abril 2020", description: "This a example text for fill the card and simulate a description", state: 1 },
@@ -27,10 +31,17 @@ export default function App() {
     { title: "Pay taxes", subtitle: "1 Mayo 2020", description: "This a example text for fill the card and simulate a description", state: 3 },
   ];
 
+  const handleAddTaskScreen = () => {
+    setAddTaskScreen(true);
+    console.log(addTaskScreen);
+  };
+
+  let output = addTaskScreen ? <AddTaskScreen /> : <HomeScreen cardsData={cardsData} />
+
   return (
     <View style={styles.screen} >
-      <TopBar />
-      <HomeScreen cardsData={cardsData} />
+      <TopBar addTaskAction={handleAddTaskScreen} />
+      {output}
     </View>
   );
 
