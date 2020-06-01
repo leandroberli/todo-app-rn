@@ -8,7 +8,7 @@ const Card = (props) => {
             <View style={{ ...styles.card, ...props.style }}>
                 <Text style={styles.title}>{props.title}</Text>
                 <Text style={styles.subtitle}>{props.subtitle}</Text>
-                <Text numberOfLines={6} style={styles.description}>{props.description}</Text>
+                <Text numberOfLines={5} style={styles.description}>{props.description}</Text>
             </View>
         </TouchableOpacity>
     );

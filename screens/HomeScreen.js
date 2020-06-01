@@ -15,7 +15,7 @@ const HomeScreen = (props) => {
   let done = cards.filter(card => { if (card.state === 3) { return card } })
 
   return (
-    <View>
+    <View style={styles.scrrollableRowContainer}>
       <ScrollableRow cardsSection="1" cards={todos} />
       <ScrollableRow cardsSection="2" cards={inprogress} />
       <ScrollableRow cardsSection="3" cards={done} />
@@ -26,4 +26,8 @@ const HomeScreen = (props) => {
 
 export default HomeScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  scrrollableRowContainer: {
+    flex: 1,
+  }
+});
