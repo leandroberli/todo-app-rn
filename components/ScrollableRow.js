@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, ScrollView, FlatList } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, FlatList, Button } from 'react-native';
 import Card from './Card';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faPenSquare, faCheckSquare, faListAlt } from '@fortawesome/free-solid-svg-icons';
@@ -52,7 +52,6 @@ const styles = StyleSheet.create({
     sectionContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-
     },
     iconSection: {
         marginTop: 15,
@@ -83,7 +82,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     todoCard: {
-        backgroundColor: 'white'
+        backgroundColor: 'white',
     },
     inprogressCard: {
         backgroundColor: '#D98E04'
