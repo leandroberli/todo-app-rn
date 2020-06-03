@@ -1,14 +1,33 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import {Picker} from '@react-native-community/picker';
 import { TextInput } from 'react-native-gesture-handler';
 
 const AddTaskScreen = ({navigation, props}) => {
+    const [task, setTask] = useState({ title: "Pay taxes", subtitle: "1 Mayo 2020", description: "This a example text for fill the card and simulate a description", state: 3 });
+
+
+    const handleStateChange = (newState) => {
+        let newTask = {title: task.title, subtitle: task.subtitle, description: task.description, state: newState};
+        setTask(newTask);
+    };
+
     return (
         <View style={styles.addTaskContainer}>
             <View style={styles.cardContainer}>
-                <TextInput style={styles.titleInput} placeholder="Title"></TextInput>
-                <TextInput style={styles.subtitleInput} placeholder="Date"></TextInput>
+                <TextInput style={styles.titleInput} placeholder="Title" value={task.title}></TextInput>
+                <TextInput style={styles.subtitleInput} placeholder="Date" value={task.subtitle}></TextInput>
+                <View style={styles.pickerContainer}>
+                <Picker selectedValue={task.state} style={styles.picker}
+                    onValueChange={handleStateChange}
+                >
+                    <Picker.Item label="To do" value={1} />
+                    <Picker.Item label="In progress" value={2} />
+                    <Picker.Item label="Done" value={3} />
+                </Picker>
+                </View>
                 <TextInput style={styles.textArea} 
+                    value={task.description}  
                     placeholder="Description" 
                     multiline={true}
                     numberOfLines={10}
@@ -86,9 +105,20 @@ const styles = StyleSheet.create({
         color: 'black',
         alignItems: 'center',
       },
-      buttonLabel: {
+    buttonLabel: {
         fontSize: 17,
         color: '#0F7394',
         marginTop: 10
-      }
+    },
+    picker: {
+        height: 50,
+        width: 150,
+    },
+    pickerContainer: {
+        borderRadius: 6,
+        borderColor: 'black',
+        borderWidth: 0.5,
+        alignSelf: 'flex-start',
+        marginLeft: 18
+    }
 });
