@@ -3,40 +3,67 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import {Picker} from '@react-native-community/picker';
 import { TextInput } from 'react-native-gesture-handler';
 
-const AddTaskScreen = ({navigation, props}) => {
-    const [task, setTask] = useState({ title: "Pay taxes", subtitle: "1 Mayo 2020", description: "This a example text for fill the card and simulate a description", state: 3 });
+const AddTaskScreen = ({route ,navigation}) => {
+    const [title, setTitle] = useState("");
+    const [subtitle, setSubtitle] = useState("");
+    const [description, setDescription] = useState("");
+    const [estado, setEstado] = useState(1);
+    
+    const handleEstado = (estado) => {
+        console.log("------------------->STATE NEW TASK:")
+        console.log(estado)
+        setEstado(estado);
+    };
 
+    const handleTitle = title => {
+        
+        setTitle(title);
+    };
 
-    const handleStateChange = (newState) => {
-        let newTask = {title: task.title, subtitle: task.subtitle, description: task.description, state: newState};
-        setTask(newTask);
+    const handleSubtitle = subtitle => {
+        setSubtitle(subtitle);
+    };
+
+    const handleDescription = description => {
+        
+        setDescription(description);
     };
 
     return (
         <View style={styles.addTaskContainer}>
             <View style={styles.cardContainer}>
-                <TextInput style={styles.titleInput} placeholder="Title" value={task.title}></TextInput>
-                <TextInput style={styles.subtitleInput} placeholder="Date" value={task.subtitle}></TextInput>
+                <TextInput style={styles.titleInput} placeholder="Title" onChangeText={ title => setTitle(title)}></TextInput>
+                <TextInput style={styles.subtitleInput} placeholder="Date" onChangeText={subtitle => setSubtitle(subtitle)}></TextInput>
                 <View style={styles.pickerContainer}>
-                <Picker selectedValue={task.state} style={styles.picker}
-                    onValueChange={handleStateChange}
+                <Picker selectedValue={estado} style={styles.picker}
+                    onValueChange={handleEstado}
                 >
                     <Picker.Item label="To do" value={1} />
                     <Picker.Item label="In progress" value={2} />
                     <Picker.Item label="Done" value={3} />
                 </Picker>
                 </View>
-                <TextInput style={styles.textArea} 
-                    value={task.description}  
+                <TextInput style={styles.textArea}   
                     placeholder="Description" 
                     multiline={true}
                     numberOfLines={10}
                     textAlignVertical="top" 
+                    onChangeText={desc => setDescription(desc)}
+                    onValueChange={handleDescription}
                 />
                 <View style={styles.buttonContainer}>
-                    <TouchableOpacity onPress={() => navigation.goBack() }>
+                    <TouchableOpacity 
+                        onPress={ () => { 
+                            navigation.navigate('Home', {card: { id: Math.floor(Math.random() * 100),
+                                title: title, 
+                                subtitle: subtitle,
+                                description: description,
+                                state:estado
+                            }}) 
+                        }}
+                    >
                         <View style={styles.addButton}>
-                        <   Text style={styles.buttonLabel}> + Add task</Text>
+                            <Text style={styles.buttonLabel}> + Add task</Text>
                         </View>
                     </TouchableOpacity>
                 </View>

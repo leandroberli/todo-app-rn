@@ -9,7 +9,7 @@ const TopBar = (props) => {
             <Text style={styles.topBarTitle}>React native example</Text>
             <TouchableOpacity onPress={ () => { 
                 props.addTaskAction();
-                console.log(props.addTaskAction);
+                //console.log(props.addTaskAction);
                 Vibration.vibrate(100); }
             }>
                 <View style={styles.topBarButtonContainer} >

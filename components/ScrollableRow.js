@@ -5,38 +5,34 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faPenSquare, faCheckSquare, faListAlt } from '@fortawesome/free-solid-svg-icons';
 
 const ScrollableRow = (props) => {
-    console.log(props)
+    console.log("---------------->ScrollableRow props")
+    console.log(props.cards) 
     const [cardsSection, setCardsSection] = useState(props.cardsSection);
-    const [cards, setCards] = useState(props.cards);
 
     let cardStyle = cardsSection == 1 ? styles.todoCard : cardsSection == 2 ? styles.inprogressCard : styles.doneCard
     let titleForSection = cardsSection == 1 ? 'To do' : cardsSection == 2 ? 'In progress' : 'Done'
     let icon = cardsSection == 1 ? faPenSquare : cardsSection == 2 ? faListAlt : faCheckSquare
-    //let count = cards.length
-
-    const handleDeleteCard = (title) => {
-        let arr = cards.filter(entry => {
-            if (entry.title != title) {
-                return entry
-            }
-        });
-        setCards(arr);
-    };
 
     return (
         <View style={styles.parentRowContainer}>
             <View style={styles.sectionContainer}>
                 <FontAwesomeIcon icon={icon} size={22} style={styles.iconSection} />
                 <Text style={styles.titleSection}> {titleForSection} </Text>
-                <Text style={styles.countTitle} > {cards.length} tasks </Text>
+                <Text style={styles.countTitle} > {props.cards.length} tasks </Text>
             </View>
             <View style={{ ...styles.rowContainer, ...props.style }}>
                 <FlatList
                     showsHorizontalScrollIndicator={false}
                     horizontal={true}
-                    data={cards}
+                    data={props.cards}
                     keyExtractor={(item, index) => item.title}
-                    renderItem={itemData => <Card style={cardStyle} title={itemData.item.title} subtitle={itemData.item.subtitle} description={itemData.item.description} onDelete={handleDeleteCard} />}
+                    renderItem={ itemData => <Card style={cardStyle}
+                        id={itemData.item.id}
+                        title={itemData.item.title} 
+                        subtitle={itemData.item.subtitle} 
+                        description={itemData.item.description}
+                        onDelete={props.onDeleteCard} 
+                         />}
                 />
             </View>
         </View>

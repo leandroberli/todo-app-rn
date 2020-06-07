@@ -3,8 +3,10 @@ import { StyleSheet, Text, View, TouchableOpacity, Vibration } from 'react-nativ
 import { LinearGradient } from 'expo';
 
 const Card = (props) => {
+    console.log("------------->CARDS PROPS")
+    console.log(props)
     return (
-        <TouchableOpacity activeOpacity={0.6} onPress={() => { props.onDelete(props.title); Vibration.vibrate(100) }}>
+        <TouchableOpacity activeOpacity={0.6} onPress={ () => { console.log(props.id);props.onDelete(props.id);} }>
             <View style={{ ...styles.card, ...props.style }}>
                 <Text style={styles.title}>{props.title}</Text>
                 <Text style={styles.subtitle}>{props.subtitle}</Text>

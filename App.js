@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
@@ -21,7 +22,7 @@ export default function App() {
         <Stack.Screen name="AddTask"
           component={AddTaskScreen}
           options={{
-            ...TransitionPresets.SlideFromRightIOS, gestureEnabled: true,
+            ...TransitionPresets.ModalPresentationIOS, gestureEnabled: true,
           }} 
         />
       </Stack.Navigator>
