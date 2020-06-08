@@ -5,8 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faPenSquare, faCheckSquare, faListAlt } from '@fortawesome/free-solid-svg-icons';
 
 const ScrollableRow = (props) => {
-    console.log("---------------->ScrollableRow props")
-    console.log(props.cards) 
     const [cardsSection, setCardsSection] = useState(props.cardsSection);
 
     let cardStyle = cardsSection == 1 ? styles.todoCard : cardsSection == 2 ? styles.inprogressCard : styles.doneCard
@@ -26,13 +24,15 @@ const ScrollableRow = (props) => {
                     horizontal={true}
                     data={props.cards}
                     keyExtractor={(item, index) => item.title}
-                    renderItem={ itemData => <Card style={cardStyle}
+                    renderItem={ itemData => 
+                    <Card style={cardStyle}
                         id={itemData.item.id}
                         title={itemData.item.title} 
                         subtitle={itemData.item.subtitle} 
                         description={itemData.item.description}
                         onDelete={props.onDeleteCard} 
-                         />}
+                        onTap={props.onTap}
+                    />}
                 />
             </View>
         </View>

@@ -29,19 +29,31 @@ const HomeScreen = ({ navigation, route}) => {
   ];
 
   const [cards, setCards] = useState([]);
-  const [todoCards, setTodoCards] = useState([]);
-  const [inprogressCards, setInprogressCards] = useState([]);
-  const [doneCards, setDoneCards] = useState([]);
+
+  if (cards.length == 0) {
+    setCards(cardsData);
+  }
 
   React.useEffect(() => {
     if (route.params?.card) {
-      console.log("--------------->ADD CARD")
+      console.log("------------->HOME - PARAMS CARD")
       console.log(route.params?.card)
-      console.log("--------------->CURRENT CARDS")
-      console.log(cards)
-      setCards(cards => [...cards, route.params?.card]);
-      console.log("--------------->CARDS AFFTER UPDATE")
-      console.log(cards)
+      let exist = cards.filter(card => { if (card.id === route.params?.card.id ){ return card } })
+      if (exist.length > 0) {
+        var aux = []
+        cards.forEach(card => {
+          if (card.id === route.params?.card.id) {
+            card.title = route.params?.card.title;
+            card.subtitle = route.params?.card.subtitle;
+            card.description = route.params?.card.description;
+            card.state = route.params?.card.state;
+          }
+          aux.push(card);
+        });
+        setCards(aux);
+      } else {
+        setCards(cards => [...cards, route.params?.card ]);
+      }
     }
   }, [route.params?.card]);
 
@@ -51,6 +63,11 @@ const HomeScreen = ({ navigation, route}) => {
     setCards(newArray);
   };
 
+  const handleCardTap = (cardId) => {
+    let card = cards.filter(card => {if (card.id === cardId) { return card }})
+    navigation.navigate('AddTask', { cardData: card[0] } );
+  };
+
   return (
     <View style={styles.scrrollableRowContainer}>
       <TouchableOpacity onPress={() => navigation.navigate('AddTask')}>
@@ -58,9 +75,9 @@ const HomeScreen = ({ navigation, route}) => {
           <Text style={styles.buttonLabel}> + Add task</Text>
         </View>
       </TouchableOpacity>
-      <ScrollableRow onDeleteCard={handleDeleteCard} cardsSection="1" cards={ cards.filter(card => { if (card.state === 1) { return card } }) }  />
-      <ScrollableRow onDeleteCard={handleDeleteCard} cardsSection="2" cards={ cards.filter(card => { if (card.state === 2) { return card } })} />
-      <ScrollableRow onDeleteCard={handleDeleteCard} cardsSection="3" cards={ cards.filter(card => { if (card.state === 3) { return card } })} />
+      <ScrollableRow onTap={handleCardTap} onDeleteCard={handleDeleteCard} cardsSection="1" cards={ cards.filter(card => { if (card.state === 1) { return card } }) }  />
+      <ScrollableRow onTap={handleCardTap} onDeleteCard={handleDeleteCard} cardsSection="2" cards={ cards.filter(card => { if (card.state === 2) { return card } })} />
+      <ScrollableRow onTap={handleCardTap} onDeleteCard={handleDeleteCard} cardsSection="3" cards={ cards.filter(card => { if (card.state === 3) { return card } })} />
     </View>
 
   );

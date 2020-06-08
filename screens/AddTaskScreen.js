@@ -4,44 +4,47 @@ import {Picker} from '@react-native-community/picker';
 import { TextInput } from 'react-native-gesture-handler';
 
 const AddTaskScreen = ({route ,navigation}) => {
+    const [id, setId] = useState(Math.floor(Math.random() * 100));
     const [title, setTitle] = useState("");
     const [subtitle, setSubtitle] = useState("");
     const [description, setDescription] = useState("");
     const [estado, setEstado] = useState(1);
-    
-    const handleEstado = (estado) => {
-        console.log("------------------->STATE NEW TASK:")
-        console.log(estado)
-        setEstado(estado);
-    };
 
-    const handleTitle = title => {
-        
-        setTitle(title);
-    };
+    React.useEffect(() => {
+        if (route.params) {
+            const { cardData } = route.params; 
+            setId(cardData.id)
+            setTitle(cardData.title);
+            setSubtitle(cardData.subtitle);
+            setEstado(cardData.state);
+            setDescription(cardData.description);
 
-    const handleSubtitle = subtitle => {
-        setSubtitle(subtitle);
-    };
-
-    const handleDescription = description => {
-        
-        setDescription(description);
-    };
+            navigation.setOptions({title: 'View task'})
+        }
+    }, [route.params?.cardData]);
 
     return (
         <View style={styles.addTaskContainer}>
             <View style={styles.cardContainer}>
-                <TextInput style={styles.titleInput} placeholder="Title" onChangeText={ title => setTitle(title)}></TextInput>
-                <TextInput style={styles.subtitleInput} placeholder="Date" onChangeText={subtitle => setSubtitle(subtitle)}></TextInput>
+                <TextInput style={styles.titleInput}
+                    placeholder="Title" 
+                    onChangeText={ title => setTitle(title)}
+                    value={title} 
+                />
+                <TextInput 
+                    style={styles.subtitleInput} 
+                    placeholder="Date" 
+                    onChangeText={subtitle => setSubtitle(subtitle)} 
+                    value={subtitle}
+                />
                 <View style={styles.pickerContainer}>
-                <Picker selectedValue={estado} style={styles.picker}
-                    onValueChange={handleEstado}
-                >
-                    <Picker.Item label="To do" value={1} />
-                    <Picker.Item label="In progress" value={2} />
-                    <Picker.Item label="Done" value={3} />
-                </Picker>
+                    <Picker selectedValue={estado} style={styles.picker}
+                        onValueChange={estado => setEstado(estado)}
+                    >
+                        <Picker.Item label="To do" value={1} />
+                        <Picker.Item label="In progress" value={2} />
+                        <Picker.Item label="Done" value={3} />
+                    </Picker>
                 </View>
                 <TextInput style={styles.textArea}   
                     placeholder="Description" 
@@ -49,18 +52,19 @@ const AddTaskScreen = ({route ,navigation}) => {
                     numberOfLines={10}
                     textAlignVertical="top" 
                     onChangeText={desc => setDescription(desc)}
-                    onValueChange={handleDescription}
+                    value={description}
                 />
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity 
-                        onPress={ () => { 
-                            navigation.navigate('Home', {card: { id: Math.floor(Math.random() * 100),
+                        onPress={() => { navigation.navigate('Home',{
+                            card: {   
+                                id: id,
                                 title: title, 
                                 subtitle: subtitle,
                                 description: description,
                                 state:estado
-                            }}) 
-                        }}
+                            }
+                        })}}
                     >
                         <View style={styles.addButton}>
                             <Text style={styles.buttonLabel}> + Add task</Text>

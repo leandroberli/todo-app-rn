@@ -1,12 +1,13 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Vibration } from 'react-native';
-import { LinearGradient } from 'expo';
 
 const Card = (props) => {
-    console.log("------------->CARDS PROPS")
-    console.log(props)
     return (
-        <TouchableOpacity activeOpacity={0.6} onPress={ () => { console.log(props.id);props.onDelete(props.id);} }>
+        <TouchableOpacity 
+            activeOpacity={0.6} 
+            onPress={()=>{Vibration.vibrate(100) ;props.onTap(props.id);}}
+            onLongPress={()=>{Vibration.vibrate(100) ;props.onDelete(props.id);}}
+        >
             <View style={{ ...styles.card, ...props.style }}>
                 <Text style={styles.title}>{props.title}</Text>
                 <Text style={styles.subtitle}>{props.subtitle}</Text>

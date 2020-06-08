@@ -17,12 +17,15 @@ export default function App() {
         <Stack.Screen name="Home" component={HomeScreen}
           options={{
             ...TransitionPresets.SlideFromRightIOS,
+            title: 'Todo App',
           }} 
         />
         <Stack.Screen name="AddTask"
           component={AddTaskScreen}
           options={{
             ...TransitionPresets.ModalPresentationIOS, gestureEnabled: true,
+            title: 'Add task',
+            headerTitleAlign: 'center',
           }} 
         />
       </Stack.Navigator>
