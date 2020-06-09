@@ -33,12 +33,4 @@ export default function App() {
   );
 }
 
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    backgroundColor: '#f4f4f4',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    marginTop: 30
-  },
-});
+const styles = StyleSheet.create({});

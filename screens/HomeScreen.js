@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, TouchableOpacity, View, Text, } from 'react-native';
 
 import ScrollableRow from '../components/ScrollableRow';
+import CustomButton from '../components/CustomButton';
 
 
 const HomeScreen = ({ navigation, route}) => {
@@ -55,6 +56,7 @@ const HomeScreen = ({ navigation, route}) => {
         setCards(cards => [...cards, route.params?.card ]);
       }
     }
+    navigation.setOptions({headerRight: () => <CustomButton title="+ Add task" onAction={ () => navigation.navigate('AddTask')} /> })
   }, [route.params?.card]);
 
   const handleDeleteCard = (cardId) => {
@@ -70,11 +72,6 @@ const HomeScreen = ({ navigation, route}) => {
 
   return (
     <View style={styles.scrrollableRowContainer}>
-      <TouchableOpacity onPress={() => navigation.navigate('AddTask')}>
-        <View style={styles.addTaskButton}>
-          <Text style={styles.buttonLabel}> + Add task</Text>
-        </View>
-      </TouchableOpacity>
       <ScrollableRow onTap={handleCardTap} onDeleteCard={handleDeleteCard} cardsSection="1" cards={ cards.filter(card => { if (card.state === 1) { return card } }) }  />
       <ScrollableRow onTap={handleCardTap} onDeleteCard={handleDeleteCard} cardsSection="2" cards={ cards.filter(card => { if (card.state === 2) { return card } })} />
       <ScrollableRow onTap={handleCardTap} onDeleteCard={handleDeleteCard} cardsSection="3" cards={ cards.filter(card => { if (card.state === 3) { return card } })} />
@@ -89,13 +86,4 @@ const styles = StyleSheet.create({
   scrrollableRowContainer: {
     flex: 1,
   },
-  addTaskButton: {
-    color: 'black',
-    alignItems: 'center',
-  },
-  buttonLabel: {
-    fontSize: 17,
-    color: '#0F7394',
-    marginTop: 10
-  }
 });

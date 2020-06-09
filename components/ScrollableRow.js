@@ -25,14 +25,15 @@ const ScrollableRow = (props) => {
                     data={props.cards}
                     keyExtractor={(item, index) => item.title}
                     renderItem={ itemData => 
-                    <Card style={cardStyle}
-                        id={itemData.item.id}
-                        title={itemData.item.title} 
-                        subtitle={itemData.item.subtitle} 
-                        description={itemData.item.description}
-                        onDelete={props.onDeleteCard} 
-                        onTap={props.onTap}
-                    />}
+                        <Card style={cardStyle}
+                            id={itemData.item.id}
+                            title={itemData.item.title} 
+                            subtitle={itemData.item.subtitle} 
+                            description={itemData.item.description}
+                            onDelete={props.onDeleteCard} 
+                            onTap={props.onTap}
+                        />
+                    }
                 />
             </View>
         </View>

@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import {Picker} from '@react-native-community/picker';
 import { TextInput } from 'react-native-gesture-handler';
 
+import CustomButton from '../components/CustomButton';
+
 const AddTaskScreen = ({route ,navigation}) => {
+    const [edit, setEdit] = useState(false);
     const [id, setId] = useState(Math.floor(Math.random() * 100));
     const [title, setTitle] = useState("");
     const [subtitle, setSubtitle] = useState("");
     const [description, setDescription] = useState("");
     const [estado, setEstado] = useState(1);
 
+    var buttonTitle = edit ? "Save it" : "+ Add tas"
+
     React.useEffect(() => {
+        navigation.setOptions({ headerStyle: {height:60} });
         if (route.params) {
             const { cardData } = route.params; 
             setId(cardData.id)
@@ -18,7 +24,9 @@ const AddTaskScreen = ({route ,navigation}) => {
             setSubtitle(cardData.subtitle);
             setEstado(cardData.state);
             setDescription(cardData.description);
+            setEdit(true)
 
+            buttonTitle = "Save it"
             navigation.setOptions({title: 'View task'})
         }
     }, [route.params?.cardData]);
@@ -55,21 +63,19 @@ const AddTaskScreen = ({route ,navigation}) => {
                     value={description}
                 />
                 <View style={styles.buttonContainer}>
-                    <TouchableOpacity 
-                        onPress={() => { navigation.navigate('Home',{
-                            card: {   
-                                id: id,
-                                title: title, 
-                                subtitle: subtitle,
-                                description: description,
-                                state:estado
-                            }
-                        })}}
-                    >
-                        <View style={styles.addButton}>
-                            <Text style={styles.buttonLabel}> + Add task</Text>
-                        </View>
-                    </TouchableOpacity>
+                    <CustomButton title={buttonTitle}
+                        onAction={ () => { 
+                            navigation.navigate( 'Home', { 
+                                card: {
+                                    id: id, 
+                                    title: title,
+                                    subtitle: subtitle,
+                                    description: description,
+                                    state:estado 
+                                }
+                            })
+                        }}
+                    />
                 </View>
             </View>
         </View>
