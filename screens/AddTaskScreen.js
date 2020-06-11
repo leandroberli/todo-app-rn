@@ -7,16 +7,15 @@ import CustomButton from '../components/CustomButton';
 
 const AddTaskScreen = ({route ,navigation}) => {
     const [edit, setEdit] = useState(false);
-    const [id, setId] = useState(Math.floor(Math.random() * 100));
+    const [id, setId] = useState(Date.now() + Math.random());
     const [title, setTitle] = useState("");
     const [subtitle, setSubtitle] = useState("");
     const [description, setDescription] = useState("");
     const [estado, setEstado] = useState(1);
 
-    var buttonTitle = edit ? "Save it" : "+ Add tas"
+    var buttonTitle = edit ? "Save it" : "+ Add task"
 
     React.useEffect(() => {
-        navigation.setOptions({ headerStyle: {height:60} });
         if (route.params) {
             const { cardData } = route.params; 
             setId(cardData.id)
@@ -133,8 +132,9 @@ const styles = StyleSheet.create({
         width: '90%'
     },
     buttonContainer: {
+        marginTop: 10,
         marginLeft: 10,
-        marginRight: 20,
+        marginRight: 10,
         marginBottom: 10,
         alignSelf: 'flex-end'
     },

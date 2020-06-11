@@ -23,7 +23,7 @@ const ScrollableRow = (props) => {
                     showsHorizontalScrollIndicator={false}
                     horizontal={true}
                     data={props.cards}
-                    keyExtractor={(item, index) => item.title}
+                    keyExtractor={(item, index) => '' + item.id }
                     renderItem={ itemData => 
                         <Card style={cardStyle}
                             id={itemData.item.id}
@@ -51,20 +51,21 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     iconSection: {
-        marginTop: 15,
+        marginTop: 0,
         marginLeft: 5,
-        marginBottom: 15,
+        marginBottom: 0,
         marginLeft: 5,
     },
     countTitle: {
         color: '#c4c4c4',
         marginTop: 18,
-        marginLeft: 5,
+        marginLeft: 0,
         marginBottom: 15,
-        fontSize: 15,
+        fontSize: 13,
         fontWeight: 'bold',
     },
     rowContainer: {
+        marginTop: 0,
         flex: 1,
         flexDirection: 'row',
         borderBottomColor: 'black',
@@ -72,9 +73,9 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
     },
     titleSection: {
-        marginTop: 15,
-        marginLeft: 5,
-        marginBottom: 15,
+        marginTop: 0,
+        marginLeft: 0,
+        marginBottom: 0,
         fontSize: 19,
         fontWeight: 'bold',
     },
@@ -82,9 +83,9 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
     },
     inprogressCard: {
-        backgroundColor: '#D98E04'
+        backgroundColor: '#F2BB13'
     },
     doneCard: {
-        backgroundColor: '#23D9B7'
+        backgroundColor: '#1BA673'
     }
 });

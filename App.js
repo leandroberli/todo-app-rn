@@ -23,7 +23,7 @@ export default function App() {
         <Stack.Screen name="AddTask"
           component={AddTaskScreen}
           options={{
-            ...TransitionPresets.ModalPresentationIOS, gestureEnabled: true,
+            ...TransitionPresets.SlideFromRightIOS, gestureEnabled: true,
             title: 'Add task',
             headerTitleAlign: 'center',
           }} 
