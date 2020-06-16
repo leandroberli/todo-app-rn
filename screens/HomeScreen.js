@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
-import { StyleSheet, InteractionManager, View, Text, } from 'react-native';
+import { StyleSheet, InteractionManager, View, Text, Button, } from 'react-native';
 
 import ScrollableRow from '../components/ScrollableRow';
 import CustomButton from '../components/CustomButton';
+import CardDetailScreen from './CardDetailScreen';
+import Modal from 'react-native-modal';
+import { set } from 'react-native-reanimated';
+import AddTaskScreen from './AddTaskScreen';
+import Card from '../components/Card';
+import { useLinkProps } from '@react-navigation/native';
 
 
 const HomeScreen = ({ navigation, route}) => {
@@ -30,9 +36,20 @@ const HomeScreen = ({ navigation, route}) => {
   ];
 
   const [cards, setCards] = useState([]);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedCard, setSelectedCard] = useState({ id: Date.now() + Math.random(),title: "Take the bus", subtitle: "30 Mayo 2020", description: "This a example text for fill the card and simulate a description. Here is a extension because i wanna test the max number of lines in my card description. i setted 6.", state: 1 });
+
+  const openModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setIsModalVisible(false);
+  };
 
   if (cards.length == 0) {
     setCards(cardsData);
+    setSelectedCard(cardsData[0]);
     cards.forEach(card => {
       console.log(card);
     });
@@ -70,20 +87,53 @@ const HomeScreen = ({ navigation, route}) => {
     console.log(cardId)
     let newArray = cards.filter(card => { if (card.id !== cardId ){ return card } })
     setCards(newArray);
+    setIsModalVisible(false);
   };
 
   const handleCardTap = (cardId) => {
     let card = cards.filter(card => {if (card.id === cardId) { return card }})
-    navigation.navigate('AddTask', { cardData: card[0] } );
+    console.log(card[0])
+    setSelectedCard(card[0]);
+    setIsModalVisible(true);
+  };
+
+  const handleEditCard = () => {
+    setIsModalVisible(false);
+    navigation.navigate('AddTask', { cardData: selectedCard });
   };
 
   return (
     <View style={styles.scrrollableRowContainer}>
-      <ScrollableRow onTap={handleCardTap} onDeleteCard={handleDeleteCard} cardsSection="1" cards={ cards.filter(card => { if (card.state === 1) { return card } }) }  />
-      <ScrollableRow onTap={handleCardTap} onDeleteCard={handleDeleteCard} cardsSection="2" cards={ cards.filter(card => { if (card.state === 2) { return card } })} />
-      <ScrollableRow onTap={handleCardTap} onDeleteCard={handleDeleteCard} cardsSection="3" cards={ cards.filter(card => { if (card.state === 3) { return card } })} />
+      <ScrollableRow onTap={handleCardTap} 
+        onDeleteCard={handleDeleteCard} 
+        cardsSection="1" 
+        cards={ cards.filter(card => { if (card.state === 1) { return card } }) }  
+        />
+      <ScrollableRow onTap={handleCardTap} 
+        onDeleteCard={handleDeleteCard} cardsSection="2" 
+        cards={ cards.filter(card => { if (card.state === 2) { return card } })} 
+        />
+      <ScrollableRow onTap={handleCardTap} 
+      onDeleteCard={handleDeleteCard} 
+      cardsSection="3" 
+      cards={ cards.filter(card => { if (card.state === 3) { return card } })} 
+      />
+      <Modal animationIn="slideInUp"
+        animationOut="slideOutDown" 
+        onBackdropPress={closeModal} 
+        isVisible={isModalVisible} 
+        tyle={styles.modalContainer} 
+      >
+        <CardDetailScreen title={selectedCard.title}
+          id={selectedCard.id} 
+          subtitle={selectedCard.subtitle} 
+          description={selectedCard.description}
+          onCloseModal={closeModal}
+          onDeleteCard={handleDeleteCard}
+          onEdit={ handleEditCard }
+        />
+      </Modal>
     </View>
-
   );
 };
 
@@ -92,5 +142,9 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   scrrollableRowContainer: {
     flex: 1,
+  },
+  modalContainer: {
+    alignItems: 'center',
+    height: "100%"
   },
 });
